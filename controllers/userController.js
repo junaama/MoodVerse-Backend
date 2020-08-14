@@ -23,7 +23,7 @@ User.findOne({ email: req.body.email }).then(user => {
       return res.status(400).json({ email: "Email already exists" });
     } else {
       const newUser = new User({
-        name: req.body.name,
+        username: req.body.username,
         email: req.body.email,
         password: req.body.password
       });
@@ -64,7 +64,7 @@ const email = req.body.email;
         // Create JWT Payload
         const payload = {
           id: user.id,
-          name: user.name
+          username: user.username
         };
 // Sign token
         jwt.sign(
@@ -90,9 +90,6 @@ const email = req.body.email;
 });
 
 
-
-//old
-/*
 router.get("/", async (req, res) => {
     try {
       const users = await User.find();
@@ -102,6 +99,9 @@ router.get("/", async (req, res) => {
       return res.status(500).send(error.message);
     }
   });
+//old
+/*
+
 
   router.get("/favorites", async (req, res) => {
     try {

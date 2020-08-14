@@ -9,13 +9,13 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  songs: { type: String, required: true },
-  verses: [
-    {
-      ref: "Verses",
-      type: mongoose.Schema.Types.ObjectId,
-    },
-  ],
+//   songs: { type: String, required: true },
+//   verses: [
+//     {
+//       ref: "Verses",
+//       type: mongoose.Schema.Types.ObjectId,
+//     },
+//   ],
 });
 
 const User = mongoose.model("User", userSchema);

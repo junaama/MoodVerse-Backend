@@ -3,7 +3,7 @@ const bodyParser = require("body-parser")
 const app = express();
 const cors = require("cors");
 const logger = require("morgan");
-const usersController = require("./controllers/userController");
+const userController = require("./controllers/userController");
 const passport = require("passport")
 
 const PORT = process.env.PORT || 3000;
@@ -24,7 +24,7 @@ app.use(passport.initialize());
 require("./config/passport")(passport);
 // Routes
 // app.use("/api/users", users);
-app.use("api/user/", usersController);
+app.use("/api/users", userController);
 
 
 app.set("port", process.env.PORT || 3000);
