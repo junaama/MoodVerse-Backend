@@ -22,6 +22,7 @@ app.use("/verses", versesController)
 app.use(passport.initialize());
 // Passport config
 require("./config/passport")(passport);
+app.use(passport.session()) // calls serializeUser and deserializeUser
 // Routes
 // app.use("/api/users", users);
 app.use("/api/users", userController);
