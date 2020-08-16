@@ -9,6 +9,12 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  // plans: [
+  //   {
+  //     ref: "Book",
+  //     type: mongoose.Schema.Types.ObjectId
+  //   }
+  // ]
 //   songs: { type: String, required: true },
 //   verses: [
 //     {

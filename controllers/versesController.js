@@ -11,10 +11,6 @@ router.get("/", async (req, res) => {
         console.error(err)
         return res.status(500).send(err.message)
     }
-//   Verses.find({}, (err, data) => {
-//     if (err) console.log(err);
-//     else res.send(data);
-//   });
 });
 
 // post/create

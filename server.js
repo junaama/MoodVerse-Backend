@@ -8,7 +8,7 @@ const userController = require("./controllers/userController");
 require("dotenv").config();
 const PORT = process.env.PORT || 3000;
 const versesController = require("./controllers/versesController");
-
+const bookController = require('./controllers/bookController')
 app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -18,7 +18,7 @@ app.use(bodyParser.json());
 // Routes
 app.use("/api/users", userController);
 app.use("/verses", versesController);
-
+app.use("/api/books", bookController)
 // app.set("port", process.env.PORT || 3000);
 app.listen(PORT, () => {
   console.log(`✅ PORT: ${PORT} 🌟`);
