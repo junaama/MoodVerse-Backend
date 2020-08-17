@@ -10,10 +10,10 @@ const PORT = process.env.PORT || 3000;
 const versesController = require("./controllers/versesController");
 const bookController = require('./controllers/bookController')
 //cors
-const corsOptions = {
-  origin: 'https://moodverse.netlify.app'
-}
-app.use(cors(corsOptions));
+// const corsOptions = {
+//   origin: 'https://moodverse.netlify.app'
+// }
+app.use(cors());
 app.options('*', cors())
 
 app.use(express.urlencoded({ extended: false }));
