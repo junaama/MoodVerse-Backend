@@ -9,19 +9,19 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  // plans: [
-  //   {
-  //     ref: "Book",
-  //     type: mongoose.Schema.Types.ObjectId
-  //   }
-  // ]
+  plans: [
+    {
+      ref: "Book",
+      type: mongoose.Schema.Types.ObjectId
+    }
+  ],
 //   songs: { type: String, required: true },
-//   verses: [
-//     {
-//       ref: "Verses",
-//       type: mongoose.Schema.Types.ObjectId,
-//     },
-//   ],
+  verses: [
+    {
+      ref: "Verses",
+      type: mongoose.Schema.Types.ObjectId,
+    },
+  ],
 });
 
 const User = mongoose.model("User", userSchema);

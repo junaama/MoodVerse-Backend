@@ -23,6 +23,7 @@ router.post("/", (req, res) => {
 // require the Entry model in this Verses file
 // const Entry = require('../models/entries');
 // // put/add an Entry to the Verses
+
 // router.put('/:VersesId/addEntries/:id', (req, res) => {
 //     //require the Fruit route within
 //     Entry.findById(req.params.id, (err, entry) => {
