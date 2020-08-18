@@ -4,7 +4,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 const auth = require("../middleware/auth");
-const Verse = require("../models/verses.js");
+const Verse = require("../models/verse.js");
 const Book = require("../models/books.js");
 require("dotenv").config();
 const VERSEID = process.env.VERSE_ID;
@@ -94,7 +94,7 @@ router.get("/:id",  async (req, res) => {
     verses: user.verses
   });
 });
-//old
+
 
 //delete your own account
 //only when you are logged in can u delete
@@ -107,6 +107,7 @@ router.delete("/delete", auth, async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
 router.post("/tokenIsValid", async (req, res) => {
   try {
     const token = req.header("x-auth-token");
@@ -149,32 +150,54 @@ router.put("/:userId/addPlans/:id", (req, res) => {
   });
 });
 //save verse
-router.put("/:userId/addVerses/:id", async (req, res) => {
+
+// router.put("/:userId/addVerses/:id", async (req, res) => {
 
 
-  Verse.findById(VERSEID, (err, verse)=>{
+//   Verse.findById(VERSEID, (err, verse)=>{
    
-    const thing = verse[req.body.mood].filter((item)=> {
-      return item.id === req.params.id
-    })
-    User.findByIdAndUpdate(req.params.userId, {
+//     const thing = verse[req.body.mood].filter((item)=> {
+//       return item.id === req.params.id
+//     })
+//     User.findByIdAndUpdate(req.params.userId, {
       
-      $push: {
-        verses: thing[0]._id
-      },
+//       $push: {
+//         verses: thing[0]._id
+//       },
       
-    },(err, mod)=>{
-      if(err) {console.log(err)}
+//     },(err, mod)=>{
+//       if(err) {console.log(err)}
 
-      else {
+//       else {
         
-        res.send(mod)
-      }
-    }).populate({path: 'verses', populate: {
-      path: "verses", model: "Verses"
-    }})
-  })
+//         res.send(mod)
+//       }
+//     }).populate({path: 'verses', populate: {
+//       path: "verses", model: "Verses"
+//     }})
+//   })
 
 
+// });
+
+router.put("/:userId/addVerse/:id", (req, res) => {
+  //require the Verse route within
+  Verse.findById(req.params.id, (err, vrs) => {
+    if (err) console.log(err);
+    else {
+      User.findByIdAndUpdate(
+        req.params.userId,
+        {
+          $push: {
+            verses: vrs.id,
+          },
+        },
+        (err, model) => {
+          if (err) console.log(err);
+          else res.send(model);
+        }
+      )
+    }
+  }).populate('verses')
 });
 module.exports = router;
