@@ -18,7 +18,7 @@ const userSchema = new mongoose.Schema({
 //   songs: { type: String, required: true },
   verses: [
     {
-      ref: "Verses",
+      ref: "Verse",
       type: mongoose.Schema.Types.ObjectId,
     },
   ],
