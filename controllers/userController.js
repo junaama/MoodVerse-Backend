@@ -85,11 +85,13 @@ router.get("/", async (req, res) => {
   }
 });
 //get single user
-router.get("/:id", auth, async (req, res) => {
-  const user = await User.findById(req.user);
+router.get("/:id",  async (req, res) => {
+  const user = await User.findById(req.params.id);
   res.json({
     username: user.username,
     id: user._id,
+    plans: user.plans,
+    verses: user.verses
   });
 });
 //old
@@ -147,31 +149,14 @@ router.put("/:userId/addPlans/:id", (req, res) => {
   });
 });
 //save verse
-// console.log("ID", VERSEID)
+router.put("/:userId/addVerses/:id", async (req, res) => {
 
-// Verse.find({'_id': ObjectId(VERSEID)}, {[req.body.mood]: {$elemMatch: {_id: ObjectId('5f35bdb0a35c9f82bd90631a')}}})
 
-// Verse.find({"_id": VERSEID}).elemMatch(req.body.mood, {"_id": "5f35bdb0a35c9f82bd90631a"})
-// Verse.find({"_id": VERSEID}).elemMatch("empathy", {"_id": "5f35bdb0a35c9f82bd90631a"})
-
-//Verse.find({'_id': ObjectId(VERSEID)}, {[req.body.mood]: {$elemMatch: {_id: ObjectId('5f35bdb0a35c9f82bd90631a')}}})
-router.put("/:userId/addVerses/:id", (req, res) => {
-  //require the Verse route within
-  // console.log(req.body);
-  
-  // const ans = Verse.find({ _id: VERSEID }).elemMatch("empathy", {
-  //   _id: "5f35bdb0a35c9f82bd90631a",
-  // });
-  // console.log(ans);
-  const ANS = Verse.findById(VERSEID, (err, verse)=>{
+  Verse.findById(VERSEID, (err, verse)=>{
    
     const thing = verse[req.body.mood].filter((item)=> {
       return item.id === req.params.id
     })
-    console.log("item -", thing[0]._id)
-    // verse[req.body.mood].findById("5f35bdb0a35c9f82bd906317", (err, v2)=> {
-    //   console.log("again, V2 -", v2)
-    // })
     User.findByIdAndUpdate(req.params.userId, {
       
       $push: {
@@ -185,47 +170,11 @@ router.put("/:userId/addVerses/:id", (req, res) => {
         
         res.send(mod)
       }
-    })
-    // populate('verses')
+    }).populate({path: 'verses', populate: {
+      path: "verses", model: "Verses"
+    }})
   })
 
-  // console.log(ANS)
-  // ANS.findById(req.params.id, (err, verse) => {
-  //   //  console.log("verse", verse[req.body.mood])
-  //   if (err) console.log(err);
-  //   else {
-  //     User.findByIdAndUpdate(
-  //       req.params.userId,
-  //       {
-  //         $push: {
-  //           verses: verse.id,
-  //         },
-  //       },
-  //       (err, model) => {
-  //         if (err) console.log(err);
-  //         else res.send(model);
-  //       }
-  //     );
-  //   }
-  // });
-  // Verse.findById(VERSEID, (err, verse) => {
-  //   //  console.log("verse", verse[req.body.mood])
-  //   if (err) console.log(err);
-  //   else {
-  //     User.findByIdAndUpdate(
-  //       req.params.userId,
-  //       {
-  //         $push: {
-  //           verses: verse.id,
-  //         },
-  //       },
-  //       (err, model) => {
-  //         if (err) console.log(err);
-  //         else res.send(model);
-  //       }
-  //     );
-  //   }
-  // });
 
 });
 module.exports = router;
