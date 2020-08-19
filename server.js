@@ -2,6 +2,8 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
 const cors = require("cors");
+app.use(cors());
+app.options('*', cors())
 const logger = require("morgan");
 const userController = require("./controllers/userController");
 const nodemailer = require('nodemailer')
@@ -11,8 +13,7 @@ const PORT = process.env.PORT || 3000;
 const bookController = require('./controllers/bookController')
 const verseController = require('./controllers/verseController')
 //cors
-app.use(cors());
-app.options('*', cors())
+
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
