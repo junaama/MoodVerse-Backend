@@ -7,7 +7,7 @@ const userController = require("./controllers/userController");
 const nodemailer = require('nodemailer')
 require("dotenv").config();
 const PORT = process.env.PORT || 3000;
-const versesController = require("./controllers/versesController");
+
 const bookController = require('./controllers/bookController')
 const verseController = require('./controllers/verseController')
 //cors
@@ -23,7 +23,7 @@ app.use(bodyParser.json());
 
 // Routes
 app.use("/api/users", userController);
-app.use("/verses", versesController);
+
 app.use("/api/books", bookController)
 app.use("/api/verses", verseController)
 
