@@ -19,6 +19,7 @@ router.get("/:id", async (req, res) => {
       versePath: verse.versePath,
       content: verse.content,
       mood: verse.mood,
+      id: verse._id
     });
   } catch (error) {
     console.error(error);

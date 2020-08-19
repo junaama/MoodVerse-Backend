@@ -85,23 +85,23 @@ router.get("/", async (req, res) => {
   }
 });
 //get single user
-router.get("/:id",  async (req, res) => {
+router.get("/:id", async (req, res) => {
   const user = await User.findById(req.params.id);
   res.json({
     username: user.username,
     id: user._id,
     plans: user.plans,
-    verses: user.verses
+    verses: user.verses,
   });
 });
-
 
 //delete your own account
 //only when you are logged in can u delete
 //use middleware to achieve this
-router.delete("/delete", auth, async (req, res) => {
+//put back auth when needed auth
+router.delete("/delete/:id", async (req, res) => {
   try {
-    const deletedUser = await User.findByIdAndDelete(req.user);
+    const deletedUser = await User.findByIdAndDelete(req.params.id);
     res.json(deletedUser);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -149,36 +149,6 @@ router.put("/:userId/addPlans/:id", (req, res) => {
     }
   });
 });
-//save verse
-
-// router.put("/:userId/addVerses/:id", async (req, res) => {
-
-
-//   Verse.findById(VERSEID, (err, verse)=>{
-   
-//     const thing = verse[req.body.mood].filter((item)=> {
-//       return item.id === req.params.id
-//     })
-//     User.findByIdAndUpdate(req.params.userId, {
-      
-//       $push: {
-//         verses: thing[0]._id
-//       },
-      
-//     },(err, mod)=>{
-//       if(err) {console.log(err)}
-
-//       else {
-        
-//         res.send(mod)
-//       }
-//     }).populate({path: 'verses', populate: {
-//       path: "verses", model: "Verses"
-//     }})
-//   })
-
-
-// });
 
 router.put("/:userId/addVerse/:id", (req, res) => {
   //require the Verse route within
@@ -196,8 +166,33 @@ router.put("/:userId/addVerse/:id", (req, res) => {
           if (err) console.log(err);
           else res.send(model);
         }
-      )
+      );
     }
-  }).populate('verses')
+  }).populate("verses");
+});
+//remove from saved
+router.put("/:userId/removeVerse/:id", (req, res) => {
+  Verse.findById(req.params.id, (err, vrs) => {
+    console.log(vrs);
+    if (err) {
+      console.log(err);
+    } else {
+      User.findByIdAndUpdate(
+        req.params.userId,
+        {
+          $pull: {
+            verses: vrs.id,
+          },
+        },
+        (err, model) => {
+          if (err) {
+            console.log(err);
+          } else {
+            res.send(model);
+          }
+        }
+      );
+    }
+  });
 });
 module.exports = router;
