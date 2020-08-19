@@ -3,7 +3,6 @@ const bodyParser = require("body-parser");
 const app = express();
 const cors = require("cors");
 app.use(cors());
-// app.options('*', cors())
 const logger = require("morgan");
 const userController = require("./controllers/userController");
 const nodemailer = require('nodemailer')
