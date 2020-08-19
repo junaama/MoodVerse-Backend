@@ -55,7 +55,7 @@ app.post('/api/send', (req, res)=> {
     smtpTransport.close()
   })
 })
-
-app.listen(PORT, () => {
+app.set("port", process.env.PORT || 3000)
+app.listen(app.get("port"), () => {
   console.log(`✅ PORT: ${PORT} 🌟`);
 });
