@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
@@ -6,7 +7,7 @@ app.use(cors());
 const logger = require("morgan");
 const userController = require("./controllers/userController");
 const nodemailer = require('nodemailer')
-require("dotenv").config();
+
 const PORT = process.env.PORT || 3000;
 
 const bookController = require('./controllers/bookController')
