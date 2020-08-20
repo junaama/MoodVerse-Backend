@@ -71,7 +71,9 @@ router.post("/login", async (req, res) => {
         email: user.email,
       },
     });
-  } catch (err) {}
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 //get all users
